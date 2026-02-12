@@ -1,0 +1,99 @@
+{
+    "common": {
+        "appName": "LanDev",
+        "loading": "Memuat...",
+        "save": "Simpan",
+        "cancel": "Batal",
+        "delete": "Hapus",
+        "edit": "Ubah",
+        "create": "Buat",
+        "search": "Cari...",
+        "actions": "Aksi",
+        "confirm": "Konfirmasi",
+        "back": "Kembali",
+        "yes": "Ya",
+        "no": "Tidak",
+        "noData": "Tidak ada data",
+        "success": "Berhasil",
+        "error": "Terjadi kesalahan"
+    },
+    "auth": {
+        "login": "Masuk",
+        "logout": "Keluar",
+        "email": "Email",
+        "password": "Kata Sandi",
+        "loginTitle": "Masuk ke Akun Anda",
+        "loginSubtitle": "Masukkan kredensial untuk mengakses dasbor",
+        "invalidCredentials": "Kredensial tidak valid"
+    },
+    "nav": {
+        "dashboard": "Dasbor",
+        "tenants": "Tenant",
+        "users": "Pengguna",
+        "roles": "Peran",
+        "settings": "Pengaturan",
+        "activityLogs": "Log Aktivitas"
+    },
+    "dashboard": {
+        "title": "Dasbor",
+        "welcome": "Selamat Datang Kembali",
+        "totalUsers": "Total Pengguna",
+        "totalRoles": "Total Peran",
+        "totalTenants": "Total Tenant",
+        "recentActivity": "Aktivitas Terbaru"
+    },
+    "tenants": {
+        "title": "Manajemen Tenant",
+        "name": "Nama",
+        "slug": "Slug",
+        "status": "Status",
+        "active": "Aktif",
+        "inactive": "Nonaktif",
+        "createTenant": "Buat Tenant",
+        "editTenant": "Ubah Tenant",
+        "deleteTenant": "Hapus Tenant",
+        "selectTenant": "Pilih Tenant",
+        "confirmDelete": "Apakah Anda yakin ingin menghapus tenant ini?"
+    },
+    "users": {
+        "title": "Manajemen Pengguna",
+        "name": "Nama",
+        "email": "Email",
+        "role": "Peran",
+        "status": "Status",
+        "active": "Aktif",
+        "inactive": "Nonaktif",
+        "createUser": "Buat Pengguna",
+        "editUser": "Ubah Pengguna",
+        "deleteUser": "Hapus Pengguna",
+        "confirmDelete": "Apakah Anda yakin ingin menghapus pengguna ini?",
+        "password": "Kata Sandi",
+        "selectRoles": "Pilih Peran"
+    },
+    "roles": {
+        "title": "Manajemen Peran",
+        "name": "Nama",
+        "description": "Deskripsi",
+        "permissions": "Izin",
+        "createRole": "Buat Peran",
+        "editRole": "Ubah Peran",
+        "deleteRole": "Hapus Peran",
+        "confirmDelete": "Apakah Anda yakin ingin menghapus peran ini?",
+        "selectPermissions": "Pilih Izin"
+    },
+    "settings": {
+        "title": "Pengaturan",
+        "theme": "Tema Warna",
+        "language": "Bahasa",
+        "blue": "Biru",
+        "red": "Merah",
+        "yellow": "Kuning",
+        "green": "Hijau",
+        "indonesian": "Indonesia",
+        "english": "Inggris",
+        "japanese": "Jepang",
+        "saved": "Pengaturan berhasil disimpan",
+        "appearance": "Tampilan",
+        "localization": "Lokalisasi"
+    }
+}

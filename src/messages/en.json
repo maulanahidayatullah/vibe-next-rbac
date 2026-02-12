@@ -1,0 +1,99 @@
+{
+    "common": {
+        "appName": "LanDev",
+        "loading": "Loading...",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "create": "Create",
+        "search": "Search...",
+        "actions": "Actions",
+        "confirm": "Confirm",
+        "back": "Back",
+        "yes": "Yes",
+        "no": "No",
+        "noData": "No data available",
+        "success": "Success",
+        "error": "An error occurred"
+    },
+    "auth": {
+        "login": "Login",
+        "logout": "Logout",
+        "email": "Email",
+        "password": "Password",
+        "loginTitle": "Sign In to Your Account",
+        "loginSubtitle": "Enter your credentials to access the dashboard",
+        "invalidCredentials": "Invalid credentials"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "tenants": "Tenants",
+        "users": "Users",
+        "roles": "Roles",
+        "settings": "Settings",
+        "activityLogs": "Activity Logs"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Welcome Back",
+        "totalUsers": "Total Users",
+        "totalRoles": "Total Roles",
+        "totalTenants": "Total Tenants",
+        "recentActivity": "Recent Activity"
+    },
+    "tenants": {
+        "title": "Tenant Management",
+        "name": "Name",
+        "slug": "Slug",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "createTenant": "Create Tenant",
+        "editTenant": "Edit Tenant",
+        "deleteTenant": "Delete Tenant",
+        "selectTenant": "Select Tenant",
+        "confirmDelete": "Are you sure you want to delete this tenant?"
+    },
+    "users": {
+        "title": "User Management",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "createUser": "Create User",
+        "editUser": "Edit User",
+        "deleteUser": "Delete User",
+        "confirmDelete": "Are you sure you want to delete this user?",
+        "password": "Password",
+        "selectRoles": "Select Roles"
+    },
+    "roles": {
+        "title": "Role Management",
+        "name": "Name",
+        "description": "Description",
+        "permissions": "Permissions",
+        "createRole": "Create Role",
+        "editRole": "Edit Role",
+        "deleteRole": "Delete Role",
+        "confirmDelete": "Are you sure you want to delete this role?",
+        "selectPermissions": "Select Permissions"
+    },
+    "settings": {
+        "title": "Settings",
+        "theme": "Theme Color",
+        "language": "Language",
+        "blue": "Blue",
+        "red": "Red",
+        "yellow": "Yellow",
+        "green": "Green",
+        "indonesian": "Indonesian",
+        "english": "English",
+        "japanese": "Japanese",
+        "saved": "Settings saved successfully",
+        "appearance": "Appearance",
+        "localization": "Localization"
+    }
+}

@@ -1,0 +1,99 @@
+{
+    "common": {
+        "appName": "LanDev",
+        "loading": "読み込み中...",
+        "save": "保存",
+        "cancel": "キャンセル",
+        "delete": "削除",
+        "edit": "編集",
+        "create": "作成",
+        "search": "検索...",
+        "actions": "操作",
+        "confirm": "確認",
+        "back": "戻る",
+        "yes": "はい",
+        "no": "いいえ",
+        "noData": "データがありません",
+        "success": "成功",
+        "error": "エラーが発生しました"
+    },
+    "auth": {
+        "login": "ログイン",
+        "logout": "ログアウト",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "loginTitle": "アカウントにログイン",
+        "loginSubtitle": "ダッシュボードにアクセスするための資格情報を入力してください",
+        "invalidCredentials": "資格情報が無効です"
+    },
+    "nav": {
+        "dashboard": "ダッシュボード",
+        "tenants": "テナント",
+        "users": "ユーザー",
+        "roles": "ロール",
+        "settings": "設定",
+        "activityLogs": "アクティビティログ"
+    },
+    "dashboard": {
+        "title": "ダッシュボード",
+        "welcome": "おかえりなさい",
+        "totalUsers": "総ユーザー数",
+        "totalRoles": "総ロール数",
+        "totalTenants": "総テナント数",
+        "recentActivity": "最近のアクティビティ"
+    },
+    "tenants": {
+        "title": "テナント管理",
+        "name": "名前",
+        "slug": "スラグ",
+        "status": "ステータス",
+        "active": "アクティブ",
+        "inactive": "非アクティブ",
+        "createTenant": "テナント作成",
+        "editTenant": "テナント編集",
+        "deleteTenant": "テナント削除",
+        "selectTenant": "テナント選択",
+        "confirmDelete": "このテナントを削除してもよろしいですか？"
+    },
+    "users": {
+        "title": "ユーザー管理",
+        "name": "名前",
+        "email": "メール",
+        "role": "ロール",
+        "status": "ステータス",
+        "active": "アクティブ",
+        "inactive": "非アクティブ",
+        "createUser": "ユーザー作成",
+        "editUser": "ユーザー編集",
+        "deleteUser": "ユーザー削除",
+        "confirmDelete": "このユーザーを削除してもよろしいですか？",
+        "password": "パスワード",
+        "selectRoles": "ロールを選択"
+    },
+    "roles": {
+        "title": "ロール管理",
+        "name": "名前",
+        "description": "説明",
+        "permissions": "権限",
+        "createRole": "ロール作成",
+        "editRole": "ロール編集",
+        "deleteRole": "ロール削除",
+        "confirmDelete": "このロールを削除してもよろしいですか？",
+        "selectPermissions": "権限を選択"
+    },
+    "settings": {
+        "title": "設定",
+        "theme": "テーマカラー",
+        "language": "言語",
+        "blue": "ブルー",
+        "red": "レッド",
+        "yellow": "イエロー",
+        "green": "グリーン",
+        "indonesian": "インドネシア語",
+        "english": "英語",
+        "japanese": "日本語",
+        "saved": "設定が正常に保存されました",
+        "appearance": "外観",
+        "localization": "ローカライズ"
+    }
+}
