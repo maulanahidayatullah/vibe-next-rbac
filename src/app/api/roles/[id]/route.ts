@@ -3,14 +3,15 @@ import { authenticate, unauthorizedResponse, forbiddenResponse } from '@/lib/aut
 import { Role, Permission, RolePermission } from '@/lib/db/models';
 import { logActivity } from '@/lib/auth/activity-logger';
 
-// GET single role
+// GET single role — filter isDeleted
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const auth = await authenticate(req);
         if (!auth) return unauthorizedResponse();
         const { id } = await params;
 
-        const role = await Role.findByPk(id, {
+        const role = await Role.findOne({
+            where: { id, isDeleted: false },
             include: [{ model: Permission, as: 'permissions' }],
         });
 
@@ -39,7 +40,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         }
         const { id } = await params;
 
-        const role = await Role.findByPk(id);
+        const role = await Role.findOne({ where: { id, isDeleted: false } });
         if (!role) {
             return NextResponse.json({ error: 'Role not found' }, { status: 404 });
         }
@@ -87,7 +88,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 }
 
-// DELETE role (soft delete)
+// DELETE role — soft delete via isDeleted flag
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const auth = await authenticate(req);
@@ -97,7 +98,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         }
         const { id } = await params;
 
-        const role = await Role.findByPk(id);
+        const role = await Role.findOne({ where: { id, isDeleted: false } });
         if (!role) {
             return NextResponse.json({ error: 'Role not found' }, { status: 404 });
         }
@@ -106,7 +107,8 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
             return forbiddenResponse();
         }
 
-        await role.destroy();
+        // Soft delete: set isDeleted = true (data tetap ada untuk audit)
+        await role.update({ isDeleted: true });
 
         await logActivity({
             tenantId: role.tenantId,

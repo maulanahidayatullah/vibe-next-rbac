@@ -5,7 +5,7 @@ import { User, Role, Tenant } from '@/lib/db/models';
 import { logActivity } from '@/lib/auth/activity-logger';
 import { UserRole } from '@/lib/db/models';
 
-// GET users for tenant
+// GET users for tenant — filter isDeleted
 export async function GET(req: NextRequest) {
     try {
         const auth = await authenticate(req);
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
         }
 
         const users = await User.findAll({
-            where: { tenantId },
+            where: { tenantId, isDeleted: false },
             attributes: { exclude: ['password', 'refreshToken'] },
             include: [
                 { model: Role, as: 'roles', attributes: ['id', 'name'] },
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Email, password, and name are required' }, { status: 400 });
         }
 
-        const existing = await User.findOne({ where: { email } });
+        const existing = await User.findOne({ where: { email, isDeleted: false } });
         if (existing) {
             return NextResponse.json({ error: 'User with this email already exists' }, { status: 409 });
         }

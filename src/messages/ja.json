@@ -54,7 +54,8 @@
         "editTenant": "テナント編集",
         "deleteTenant": "テナント削除",
         "selectTenant": "テナント選択",
-        "confirmDelete": "このテナントを削除してもよろしいですか？"
+        "confirmDelete": "このテナントを削除してもよろしいですか？",
+        "details": "テナント詳細"
     },
     "users": {
         "title": "ユーザー管理",
@@ -69,7 +70,8 @@
         "deleteUser": "ユーザー削除",
         "confirmDelete": "このユーザーを削除してもよろしいですか？",
         "password": "パスワード",
-        "selectRoles": "ロールを選択"
+        "selectRoles": "ロールを選択",
+        "details": "ユーザー詳細"
     },
     "roles": {
         "title": "ロール管理",
@@ -80,7 +82,8 @@
         "editRole": "ロール編集",
         "deleteRole": "ロール削除",
         "confirmDelete": "このロールを削除してもよろしいですか？",
-        "selectPermissions": "権限を選択"
+        "selectPermissions": "権限を選択",
+        "details": "ロール詳細"
     },
     "settings": {
         "title": "設定",

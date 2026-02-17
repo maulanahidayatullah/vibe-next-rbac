@@ -4,14 +4,15 @@ import { authenticate, unauthorizedResponse, forbiddenResponse } from '@/lib/aut
 import { User, Role, UserRole } from '@/lib/db/models';
 import { logActivity } from '@/lib/auth/activity-logger';
 
-// GET single user
+// GET single user — filter isDeleted
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const auth = await authenticate(req);
         if (!auth) return unauthorizedResponse();
         const { id } = await params;
 
-        const user = await User.findByPk(id, {
+        const user = await User.findOne({
+            where: { id, isDeleted: false },
             attributes: { exclude: ['password', 'refreshToken'] },
             include: [{ model: Role, as: 'roles', attributes: ['id', 'name'] }],
         });
@@ -41,7 +42,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         }
         const { id } = await params;
 
-        const user = await User.findByPk(id);
+        const user = await User.findOne({ where: { id, isDeleted: false } });
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
@@ -97,7 +98,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 }
 
-// DELETE user (soft delete)
+// DELETE user — soft delete via isDeleted flag
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const auth = await authenticate(req);
@@ -107,7 +108,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         }
         const { id } = await params;
 
-        const user = await User.findByPk(id);
+        const user = await User.findOne({ where: { id, isDeleted: false } });
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
@@ -121,7 +122,8 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
             return forbiddenResponse();
         }
 
-        await user.destroy(); // paranoid soft delete
+        // Soft delete: set isDeleted = true (data tetap ada untuk audit)
+        await user.update({ isDeleted: true });
 
         await logActivity({
             tenantId: user.tenantId,

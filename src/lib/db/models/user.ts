@@ -8,6 +8,7 @@ export class User extends Model {
     declare name: string;
     declare isSuperAdmin: boolean;
     declare isActive: boolean;
+    declare isDeleted: boolean;
     declare refreshToken: string | null;
     declare deletedAt: Date | null;
     declare createdAt: Date;
@@ -56,6 +57,11 @@ export function initUser(sequelize: Sequelize) {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true,
                 field: 'is_active',
+            },
+            isDeleted: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                field: 'is_deleted',
             },
             refreshToken: {
                 type: DataTypes.TEXT,

@@ -3,7 +3,7 @@ import { authenticate, unauthorizedResponse, forbiddenResponse } from '@/lib/aut
 import { Tenant, Setting } from '@/lib/db/models';
 import { logActivity } from '@/lib/auth/activity-logger';
 
-// GET all tenants (superadmin only)
+// GET all tenants (superadmin only) — filter isDeleted
 export async function GET(req: NextRequest) {
     try {
         const auth = await authenticate(req);
@@ -12,7 +12,10 @@ export async function GET(req: NextRequest) {
             return forbiddenResponse();
         }
 
-        const tenants = await Tenant.findAll({ order: [['createdAt', 'DESC']] });
+        const tenants = await Tenant.findAll({
+            where: { isDeleted: false },
+            order: [['createdAt', 'DESC']],
+        });
         return NextResponse.json({ tenants });
     } catch (error) {
         console.error('Get tenants error:', error);
@@ -34,7 +37,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Name and slug are required' }, { status: 400 });
         }
 
-        const existing = await Tenant.findOne({ where: { slug } });
+        const existing = await Tenant.findOne({ where: { slug, isDeleted: false } });
         if (existing) {
             return NextResponse.json({ error: 'Tenant with this slug already exists' }, { status: 409 });
         }

@@ -3,7 +3,7 @@ import { authenticate, unauthorizedResponse, forbiddenResponse } from '@/lib/aut
 import { Setting } from '@/lib/db/models';
 import { logActivity } from '@/lib/auth/activity-logger';
 
-// GET settings for tenant
+// GET settings for tenant — filter isDeleted
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
             return forbiddenResponse();
         }
 
-        const settings = await Setting.findAll({ where: { tenantId } });
+        const settings = await Setting.findAll({ where: { tenantId, isDeleted: false } });
         const settingsMap: Record<string, string> = {};
         settings.forEach((s: { key: string | number; value: string; }) => {
             settingsMap[s.key] = s.value;
@@ -60,7 +60,7 @@ export async function PUT(req: NextRequest) {
         // Update each setting
         for (const [key, value] of Object.entries(settings as Record<string, string>)) {
             const existing = await Setting.findOne({
-                where: { tenantId: targetTenantId, key },
+                where: { tenantId: targetTenantId, key, isDeleted: false },
             });
             if (existing) {
                 await existing.update({ value });
@@ -80,7 +80,7 @@ export async function PUT(req: NextRequest) {
 
         // Return updated settings
         const updatedSettings = await Setting.findAll({
-            where: { tenantId: targetTenantId },
+            where: { tenantId: targetTenantId, isDeleted: false },
         });
         const settingsMap: Record<string, string> = {};
         updatedSettings.forEach((s: { key: string | number; value: string; }) => {

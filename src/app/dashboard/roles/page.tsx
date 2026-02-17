@@ -3,15 +3,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/auth-store';
 import { useSettingsStore } from '@/stores/settings-store';
 import { api } from '@/lib/api-client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PageTransition } from '@/components/layout/page-transition';
@@ -35,15 +33,11 @@ interface RoleData {
 
 export default function RolesPage() {
     const t = useTranslations();
+    const router = useRouter();
     const { user, hasPermission } = useAuthStore();
     const { selectedTenantId } = useSettingsStore();
     const [roles, setRoles] = useState<RoleData[]>([]);
-    const [permissions, setPermissions] = useState<Permission[]>([]);
     const [loading, setLoading] = useState(true);
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [editRole, setEditRole] = useState<RoleData | null>(null);
-    const [form, setForm] = useState({ name: '', description: '', permissionIds: [] as string[] });
-    const [saving, setSaving] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [roleToDelete, setRoleToDelete] = useState<RoleData | null>(null);
 
@@ -52,12 +46,8 @@ export default function RolesPage() {
     const fetchData = async () => {
         if (!tenantId) return;
         try {
-            const [rolesData, permsData] = await Promise.all([
-                api.getRoles(tenantId),
-                api.getPermissions(),
-            ]);
-            setRoles(rolesData.roles || []);
-            setPermissions(permsData.permissions || []);
+            const data = await api.getRoles(tenantId);
+            setRoles(data.roles || []);
         } catch (error) {
             toast.error(t('common.error'));
         } finally {
@@ -66,28 +56,9 @@ export default function RolesPage() {
     };
 
     useEffect(() => {
+        setLoading(true);
         fetchData();
     }, [tenantId]);
-
-    const handleSave = async () => {
-        setSaving(true);
-        try {
-            if (editRole) {
-                await api.updateRole(editRole.id, { ...form, tenantId });
-            } else {
-                await api.createRole({ ...form, tenantId });
-            }
-            toast.success(t('common.success'));
-            setDialogOpen(false);
-            setEditRole(null);
-            setForm({ name: '', description: '', permissionIds: [] });
-            fetchData();
-        } catch (error: any) {
-            toast.error(error.message);
-        } finally {
-            setSaving(false);
-        }
-    };
 
     const handleDelete = async () => {
         if (!roleToDelete) return;
@@ -102,38 +73,6 @@ export default function RolesPage() {
         }
     };
 
-    const openEdit = (role: RoleData) => {
-        setEditRole(role);
-        setForm({
-            name: role.name,
-            description: role.description || '',
-            permissionIds: role.permissions.map((p) => p.id),
-        });
-        setDialogOpen(true);
-    };
-
-    const openCreate = () => {
-        setEditRole(null);
-        setForm({ name: '', description: '', permissionIds: [] });
-        setDialogOpen(true);
-    };
-
-    const togglePermission = (permId: string) => {
-        setForm((prev) => ({
-            ...prev,
-            permissionIds: prev.permissionIds.includes(permId)
-                ? prev.permissionIds.filter((id) => id !== permId)
-                : [...prev.permissionIds, permId],
-        }));
-    };
-
-    // Group permissions by module
-    const groupedPermissions = permissions.reduce((acc, perm) => {
-        if (!acc[perm.module]) acc[perm.module] = [];
-        acc[perm.module].push(perm);
-        return acc;
-    }, {} as Record<string, Permission[]>);
-
     return (
         <PageTransition>
             <div className="space-y-6">
@@ -143,7 +82,11 @@ export default function RolesPage() {
                         <p className="text-muted-foreground text-sm mt-1">Manage roles and permission assignments</p>
                     </div>
                     {hasPermission('roles.create') && (
-                        <Button onClick={openCreate} className="theme-gradient text-white border-0" id="create-role-btn">
+                        <Button
+                            onClick={() => router.push('/dashboard/roles/create')}
+                            className="theme-gradient text-white border-0"
+                            id="create-role-btn"
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
                                 <line x1="12" y1="5" x2="12" y2="19" />
                                 <line x1="5" y1="12" x2="19" y2="12" />
@@ -199,7 +142,11 @@ export default function RolesPage() {
                                             <TableCell className="text-right">
                                                 <div className="flex justify-end gap-2">
                                                     {hasPermission('roles.edit') && (
-                                                        <Button variant="ghost" size="sm" onClick={() => openEdit(role)}>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => router.push(`/dashboard/roles/${role.id}/edit`)}
+                                                        >
                                                             {t('common.edit')}
                                                         </Button>
                                                     )}
@@ -229,51 +176,6 @@ export default function RolesPage() {
                         )}
                     </CardContent>
                 </Card>
-
-                {/* Create/Edit Role Dialog with Permissions */}
-                <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogContent className="glass border-0 max-w-2xl max-h-[85vh]">
-                        <DialogHeader>
-                            <DialogTitle>{editRole ? t('roles.editRole') : t('roles.createRole')}</DialogTitle>
-                        </DialogHeader>
-                        <div className="space-y-4 py-4 overflow-y-auto max-h-[55vh] pr-2">
-                            <div className="space-y-2">
-                                <Label>{t('roles.name')}</Label>
-                                <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="glass border-0" id="role-name-input" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label>{t('roles.description')}</Label>
-                                <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="glass border-0" id="role-description-input" />
-                            </div>
-                            <div className="space-y-3">
-                                <Label className="text-base font-semibold">{t('roles.selectPermissions')}</Label>
-                                {Object.entries(groupedPermissions).map(([module, perms]) => (
-                                    <div key={module} className="rounded-xl bg-accent/20 p-4">
-                                        <h4 className="text-sm font-semibold capitalize mb-3 theme-gradient-text">{module}</h4>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            {perms.map((perm) => (
-                                                <div key={perm.id} className="flex items-center space-x-2">
-                                                    <Checkbox
-                                                        id={`perm-${perm.id}`}
-                                                        checked={form.permissionIds.includes(perm.id)}
-                                                        onCheckedChange={() => togglePermission(perm.id)}
-                                                    />
-                                                    <label htmlFor={`perm-${perm.id}`} className="text-sm cursor-pointer">
-                                                        {perm.name}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button variant="outline" onClick={() => setDialogOpen(false)}>{t('common.cancel')}</Button>
-                            <Button onClick={handleSave} disabled={saving} className="theme-gradient text-white border-0">{t('common.save')}</Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
 
                 {/* Delete Confirmation */}
                 <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

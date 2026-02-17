@@ -5,6 +5,7 @@ export class Tenant extends Model {
     declare name: string;
     declare slug: string;
     declare isActive: boolean;
+    declare isDeleted: boolean;
     declare deletedAt: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -31,6 +32,11 @@ export function initTenant(sequelize: Sequelize) {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true,
                 field: 'is_active',
+            },
+            isDeleted: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                field: 'is_deleted',
             },
         },
         {

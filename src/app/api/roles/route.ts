@@ -3,7 +3,7 @@ import { authenticate, unauthorizedResponse, forbiddenResponse } from '@/lib/aut
 import { Role, Permission, RolePermission } from '@/lib/db/models';
 import { logActivity } from '@/lib/auth/activity-logger';
 
-// GET roles for tenant
+// GET roles for tenant — filter isDeleted
 export async function GET(req: NextRequest) {
     try {
         const auth = await authenticate(req);
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
         }
 
         const roles = await Role.findAll({
-            where: { tenantId },
+            where: { tenantId, isDeleted: false },
             include: [{ model: Permission, as: 'permissions' }],
             order: [['createdAt', 'DESC']],
         });

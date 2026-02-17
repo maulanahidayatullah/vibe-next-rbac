@@ -3,14 +3,14 @@ import { authenticate, unauthorizedResponse, forbiddenResponse } from '@/lib/aut
 import { Tenant } from '@/lib/db/models';
 import { logActivity } from '@/lib/auth/activity-logger';
 
-// GET single tenant
+// GET single tenant — filter isDeleted
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const auth = await authenticate(req);
         if (!auth) return unauthorizedResponse();
         const { id } = await params;
 
-        const tenant = await Tenant.findByPk(id);
+        const tenant = await Tenant.findOne({ where: { id, isDeleted: false } });
         if (!tenant) {
             return NextResponse.json({ error: 'Tenant not found' }, { status: 404 });
         }
@@ -32,7 +32,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         }
         const { id } = await params;
 
-        const tenant = await Tenant.findByPk(id);
+        const tenant = await Tenant.findOne({ where: { id, isDeleted: false } });
         if (!tenant) {
             return NextResponse.json({ error: 'Tenant not found' }, { status: 404 });
         }
@@ -57,7 +57,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 }
 
-// DELETE tenant (soft delete)
+// DELETE tenant — soft delete via isDeleted flag
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const auth = await authenticate(req);
@@ -67,12 +67,13 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
         }
         const { id } = await params;
 
-        const tenant = await Tenant.findByPk(id);
+        const tenant = await Tenant.findOne({ where: { id, isDeleted: false } });
         if (!tenant) {
             return NextResponse.json({ error: 'Tenant not found' }, { status: 404 });
         }
 
-        await tenant.destroy(); // paranoid soft delete
+        // Soft delete: set isDeleted = true (data tetap ada untuk audit)
+        await tenant.update({ isDeleted: true });
 
         await logActivity({
             tenantId: auth.user.tenantId,

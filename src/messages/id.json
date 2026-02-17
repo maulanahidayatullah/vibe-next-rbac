@@ -54,7 +54,8 @@
         "editTenant": "Ubah Tenant",
         "deleteTenant": "Hapus Tenant",
         "selectTenant": "Pilih Tenant",
-        "confirmDelete": "Apakah Anda yakin ingin menghapus tenant ini?"
+        "confirmDelete": "Apakah Anda yakin ingin menghapus tenant ini?",
+        "details": "Detail Tenant"
     },
     "users": {
         "title": "Manajemen Pengguna",
@@ -69,7 +70,8 @@
         "deleteUser": "Hapus Pengguna",
         "confirmDelete": "Apakah Anda yakin ingin menghapus pengguna ini?",
         "password": "Kata Sandi",
-        "selectRoles": "Pilih Peran"
+        "selectRoles": "Pilih Peran",
+        "details": "Detail Pengguna"
     },
     "roles": {
         "title": "Manajemen Peran",
@@ -80,7 +82,8 @@
         "editRole": "Ubah Peran",
         "deleteRole": "Hapus Peran",
         "confirmDelete": "Apakah Anda yakin ingin menghapus peran ini?",
-        "selectPermissions": "Pilih Izin"
+        "selectPermissions": "Pilih Izin",
+        "details": "Detail Peran"
     },
     "settings": {
         "title": "Pengaturan",

@@ -7,14 +7,13 @@ import { useAuthStore } from '@/stores/auth-store';
 import { api } from '@/lib/api-client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PageTransition } from '@/components/layout/page-transition';
 import { TableSkeleton } from '@/components/layout/loading-skeletons';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 interface Tenant {
     id: string;
@@ -26,13 +25,10 @@ interface Tenant {
 
 export default function TenantsPage() {
     const t = useTranslations();
+    const router = useRouter();
     const { user } = useAuthStore();
     const [tenants, setTenants] = useState<Tenant[]>([]);
     const [loading, setLoading] = useState(true);
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [editTenant, setEditTenant] = useState<Tenant | null>(null);
-    const [form, setForm] = useState({ name: '', slug: '' });
-    const [saving, setSaving] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [tenantToDelete, setTenantToDelete] = useState<Tenant | null>(null);
 
@@ -52,27 +48,6 @@ export default function TenantsPage() {
         else setLoading(false);
     }, [user]);
 
-    const handleSave = async () => {
-        setSaving(true);
-        try {
-            if (editTenant) {
-                await api.updateTenant(editTenant.id, form);
-                toast.success(t('common.success'));
-            } else {
-                await api.createTenant(form);
-                toast.success(t('common.success'));
-            }
-            setDialogOpen(false);
-            setEditTenant(null);
-            setForm({ name: '', slug: '' });
-            fetchTenants();
-        } catch (error: any) {
-            toast.error(error.message);
-        } finally {
-            setSaving(false);
-        }
-    };
-
     const handleDelete = async () => {
         if (!tenantToDelete) return;
         try {
@@ -84,18 +59,6 @@ export default function TenantsPage() {
         } catch (error: any) {
             toast.error(error.message);
         }
-    };
-
-    const openEdit = (tenant: Tenant) => {
-        setEditTenant(tenant);
-        setForm({ name: tenant.name, slug: tenant.slug });
-        setDialogOpen(true);
-    };
-
-    const openCreate = () => {
-        setEditTenant(null);
-        setForm({ name: '', slug: '' });
-        setDialogOpen(true);
     };
 
     if (!user?.isSuperAdmin) {
@@ -117,7 +80,7 @@ export default function TenantsPage() {
                         <p className="text-muted-foreground text-sm mt-1">Manage multi-tenant environments</p>
                     </div>
                     <Button
-                        onClick={openCreate}
+                        onClick={() => router.push('/dashboard/tenants/create')}
                         className="theme-gradient text-white border-0"
                         id="create-tenant-btn"
                     >
@@ -129,7 +92,7 @@ export default function TenantsPage() {
                     </Button>
                 </div>
 
-                <Card className="border-0">
+                <Card className="glass border-0">
                     <CardContent className="p-0">
                         {loading ? (
                             <div className="p-6"><TableSkeleton rows={5} cols={4} /></div>
@@ -166,7 +129,7 @@ export default function TenantsPage() {
                                                     <Button
                                                         variant="ghost"
                                                         size="sm"
-                                                        onClick={() => openEdit(tenant)}
+                                                        onClick={() => router.push(`/dashboard/tenants/${tenant.id}/edit`)}
                                                         className="hover:bg-accent"
                                                     >
                                                         {t('common.edit')}
@@ -196,46 +159,9 @@ export default function TenantsPage() {
                     </CardContent>
                 </Card>
 
-                {/* Create/Edit Dialog */}
-                <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogContent className="border-0">
-                        <DialogHeader>
-                            <DialogTitle>
-                                {editTenant ? t('tenants.editTenant') : t('tenants.createTenant')}
-                            </DialogTitle>
-                        </DialogHeader>
-                        <div className="space-y-4 py-4">
-                            <div className="space-y-2">
-                                <Label>{t('tenants.name')}</Label>
-                                <Input
-                                    value={form.name}
-                                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                    className="border-0"
-                                    id="tenant-name-input"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label>{t('tenants.slug')}</Label>
-                                <Input
-                                    value={form.slug}
-                                    onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
-                                    className=" border-0"
-                                    id="tenant-slug-input"
-                                />
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button variant="outline" onClick={() => setDialogOpen(false)}>{t('common.cancel')}</Button>
-                            <Button onClick={handleSave} disabled={saving} className="theme-gradient text-white border-0">
-                                {t('common.save')}
-                            </Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
-
-                {/* Delete Confirmation */}
+                {/* Delete Confirmation — keep dialog for destructive action confirmation */}
                 <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-                    <DialogContent className="border-0">
+                    <DialogContent className="glass border-0">
                         <DialogHeader>
                             <DialogTitle>{t('tenants.deleteTenant')}</DialogTitle>
                         </DialogHeader>

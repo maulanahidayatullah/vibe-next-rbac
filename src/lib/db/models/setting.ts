@@ -5,6 +5,7 @@ export class Setting extends Model {
     declare tenantId: string;
     declare key: string;
     declare value: string;
+    declare isDeleted: boolean;
     declare deletedAt: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -34,6 +35,11 @@ export function initSetting(sequelize: Sequelize) {
             value: {
                 type: DataTypes.TEXT,
                 allowNull: false,
+            },
+            isDeleted: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                field: 'is_deleted',
             },
         },
         {

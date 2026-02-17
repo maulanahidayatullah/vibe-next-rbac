@@ -5,6 +5,7 @@ export class Role extends Model {
     declare tenantId: string;
     declare name: string;
     declare description: string | null;
+    declare isDeleted: boolean;
     declare deletedAt: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -35,6 +36,11 @@ export function initRole(sequelize: Sequelize) {
             description: {
                 type: DataTypes.TEXT,
                 allowNull: true,
+            },
+            isDeleted: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                field: 'is_deleted',
             },
         },
         {
