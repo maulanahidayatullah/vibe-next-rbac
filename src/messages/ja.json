@@ -29,6 +29,7 @@
     "nav": {
         "dashboard": "ダッシュボード",
         "tenants": "テナント",
+        "schools": "学校",
         "users": "ユーザー",
         "roles": "ロール",
         "settings": "設定",

@@ -29,6 +29,7 @@
     "nav": {
         "dashboard": "Dashboard",
         "tenants": "Tenants",
+        "schools": "Schools",
         "users": "Users",
         "roles": "Roles",
         "settings": "Settings",

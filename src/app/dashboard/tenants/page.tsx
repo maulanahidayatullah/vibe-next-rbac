@@ -129,7 +129,7 @@ export default function TenantsPage() {
                     </Button>
                 </div>
 
-                <Card className="glass border-0">
+                <Card className="border-0">
                     <CardContent className="p-0">
                         {loading ? (
                             <div className="p-6"><TableSkeleton rows={5} cols={4} /></div>
@@ -198,7 +198,7 @@ export default function TenantsPage() {
 
                 {/* Create/Edit Dialog */}
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogContent className="glass border-0">
+                    <DialogContent className="border-0">
                         <DialogHeader>
                             <DialogTitle>
                                 {editTenant ? t('tenants.editTenant') : t('tenants.createTenant')}
@@ -210,7 +210,7 @@ export default function TenantsPage() {
                                 <Input
                                     value={form.name}
                                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                    className="glass border-0"
+                                    className="border-0"
                                     id="tenant-name-input"
                                 />
                             </div>
@@ -219,7 +219,7 @@ export default function TenantsPage() {
                                 <Input
                                     value={form.slug}
                                     onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
-                                    className="glass border-0"
+                                    className=" border-0"
                                     id="tenant-slug-input"
                                 />
                             </div>
@@ -235,7 +235,7 @@ export default function TenantsPage() {
 
                 {/* Delete Confirmation */}
                 <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-                    <DialogContent className="glass border-0">
+                    <DialogContent className="border-0">
                         <DialogHeader>
                             <DialogTitle>{t('tenants.deleteTenant')}</DialogTitle>
                         </DialogHeader>

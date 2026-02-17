@@ -49,6 +49,32 @@ export function Sidebar() {
             ),
         },
         {
+            label: t('schools'),
+            href: '/dashboard/schools',
+            permission: 'schools.view',
+            superAdminOnly: true,
+            icon: (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <path d="M3 10l9-6 9 6" />
+                    <rect x="5" y="10" width="14" height="10" rx="1" />
+                    <rect x="10" y="14" width="4" height="6" />
+                    <path d="M12 4v4" />
+                    <path d="M12 4l3 2-3 2" />
+                </svg>
+            ),
+
+        },
+        {
             label: t('users'),
             href: '/dashboard/users',
             permission: 'users.view',
@@ -107,7 +133,7 @@ export function Sidebar() {
                             <div className="px-4 mb-4">
                                 <div className="px-3 py-2 rounded-lg bg-primary/10 border border-primary/20">
                                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                                        Tenant
+                                        School
                                     </p>
                                     <p className="text-sm font-semibold text-primary truncate">
                                         {user.tenantName}

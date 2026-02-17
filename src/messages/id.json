@@ -29,6 +29,7 @@
     "nav": {
         "dashboard": "Dasbor",
         "tenants": "Tenant",
+        "schools": "Sekolah",
         "users": "Pengguna",
         "roles": "Peran",
         "settings": "Pengaturan",

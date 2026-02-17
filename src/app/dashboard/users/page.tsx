@@ -153,7 +153,7 @@ export default function UsersPage() {
 
                 {user?.isSuperAdmin && <TenantSelector />}
 
-                <Card className="glass border-0">
+                <Card className=" border-0">
                     <CardContent className="p-0">
                         {loading ? (
                             <div className="p-6"><TableSkeleton rows={5} cols={5} /></div>
@@ -235,22 +235,22 @@ export default function UsersPage() {
                 </Card>
 
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogContent className="glass border-0 max-w-lg">
+                    <DialogContent className=" border-0 max-w-lg">
                         <DialogHeader>
                             <DialogTitle>{editUser ? t('users.editUser') : t('users.createUser')}</DialogTitle>
                         </DialogHeader>
                         <div className="space-y-4 py-4 max-h-[60vh] overflow-y-auto">
                             <div className="space-y-2">
                                 <Label>{t('users.name')}</Label>
-                                <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="glass border-0" id="user-name-input" />
+                                <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className=" border-0" id="user-name-input" />
                             </div>
                             <div className="space-y-2">
                                 <Label>{t('users.email')}</Label>
-                                <Input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} type="email" className="glass border-0" id="user-email-input" />
+                                <Input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} type="email" className=" border-0" id="user-email-input" />
                             </div>
                             <div className="space-y-2">
                                 <Label>{t('users.password')} {editUser && '(leave blank to keep current)'}</Label>
-                                <Input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} type="password" className="glass border-0" id="user-password-input" />
+                                <Input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} type="password" className=" border-0" id="user-password-input" />
                             </div>
                             <div className="space-y-2">
                                 <Label>{t('users.selectRoles')}</Label>
@@ -276,7 +276,7 @@ export default function UsersPage() {
                 </Dialog>
 
                 <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-                    <DialogContent className="glass border-0">
+                    <DialogContent className=" border-0">
                         <DialogHeader>
                             <DialogTitle>{t('users.deleteUser')}</DialogTitle>
                         </DialogHeader>
