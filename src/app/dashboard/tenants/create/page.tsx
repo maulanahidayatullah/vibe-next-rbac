@@ -36,6 +36,13 @@ export default function CreateTenantPage() {
         }
     };
 
+    const slugify = (value: string) => {
+        return value
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+    };
+
     return (
         <PageTransition>
             <div className="max-w-2xl mx-auto space-y-6">
@@ -74,7 +81,15 @@ export default function CreateTenantPage() {
                                     <Input
                                         id="tenant-name"
                                         value={form.name}
-                                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                        onChange={(e) => {
+                                            const name = e.target.value;
+
+                                            setForm({
+                                                ...form,
+                                                name,
+                                                slug: slugify(name),
+                                            });
+                                        }}
                                         placeholder="e.g. Acme Corp"
                                         className="glass border-0 h-11"
                                         required

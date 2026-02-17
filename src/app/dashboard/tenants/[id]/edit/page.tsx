@@ -63,6 +63,14 @@ export default function EditTenantPage() {
         }
     };
 
+
+    const slugify = (value: string) => {
+        return value
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+    };
+
     if (loading) {
         return (
             <div className="max-w-2xl mx-auto">
@@ -109,7 +117,15 @@ export default function EditTenantPage() {
                                     <Input
                                         id="tenant-name"
                                         value={form.name}
-                                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                        onChange={(e) => {
+                                            const name = e.target.value;
+
+                                            setForm({
+                                                ...form,
+                                                name,
+                                                slug: slugify(name),
+                                            });
+                                        }}
                                         className="glass border-0 h-11"
                                         required
                                     />

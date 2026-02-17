@@ -19,17 +19,21 @@ export async function POST(req: NextRequest) {
                     as: 'roles',
                     include: [{ model: Permission, as: 'permissions' }],
                 },
-                { model: Tenant, as: 'tenant' },
+                {
+                    model: Tenant,
+                    as: 'tenant',
+                    where: { isActive: true }
+                },
             ],
         });
 
         if (!user) {
-            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+            return NextResponse.json({ error: 'Invalid credentials' }, { status: 404 });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+            return NextResponse.json({ error: 'Invalid credentials' }, { status: 404 });
         }
 
         // Gather permissions
