@@ -38,6 +38,19 @@ export function initTenant(sequelize: Sequelize) {
                 defaultValue: false,
                 field: 'is_deleted',
             },
+            periodStart: {
+                type: DataTypes.DATE,
+                field: 'period_start',
+            },
+            periodEnd: {
+                type: DataTypes.DATE,
+                field: 'period_end',
+            },
+            isParent: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                field: 'is_parent',
+            },
         },
         {
             sequelize,

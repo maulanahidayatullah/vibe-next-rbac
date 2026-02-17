@@ -3,9 +3,11 @@ import bcrypt from 'bcryptjs';
 import { User, Role, Permission, Setting, Tenant } from '@/lib/db/models';
 import { generateAccessToken, generateRefreshToken } from '@/lib/auth/jwt';
 import { logActivity } from '@/lib/auth/activity-logger';
+import { DateTime } from 'luxon';
 
 export async function POST(req: NextRequest) {
     try {
+
         const { email, password } = await req.json();
         if (!email || !password) {
             return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
@@ -34,6 +36,17 @@ export async function POST(req: NextRequest) {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return NextResponse.json({ error: 'Invalid credentials' }, { status: 404 });
+        }
+
+        if (!user.isSuperAdmin) {
+            const now = DateTime.now().setZone('Asia/Jakarta');
+            if (user.tenant.periodStart && user.tenant.periodEnd) {
+                if (now < DateTime.fromJSDate(user.tenant.periodStart) || now > DateTime.fromJSDate(user.tenant.periodEnd)) {
+                    return NextResponse.json({ error: 'Tenant is not active' }, { status: 404 });
+                }
+            } else {
+                return NextResponse.json({ error: 'Tenant is not active' }, { status: 404 });
+            }
         }
 
         // Gather permissions

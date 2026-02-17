@@ -55,7 +55,10 @@
         "deleteTenant": "テナント削除",
         "selectTenant": "テナント選択",
         "confirmDelete": "このテナントを削除してもよろしいですか？",
-        "details": "テナント詳細"
+        "details": "テナント詳細",
+        "periodStart": "期間開始",
+        "periodEnd": "期間終了",
+        "foundation": "財団"
     },
     "users": {
         "title": "ユーザー管理",

@@ -12,11 +12,12 @@ import { Label } from '@/components/ui/label';
 import { PageTransition } from '@/components/layout/page-transition';
 import { toast } from 'sonner';
 import { ChevronLeft } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 
 export default function CreateTenantPage() {
     const t = useTranslations();
     const router = useRouter();
-    const [form, setForm] = useState({ name: '', slug: '' });
+    const [form, setForm] = useState({ name: '', slug: '', periodStart: '', periodEnd: '', isParent: false });
     const [saving, setSaving] = useState(false);
 
     const handleSave = async (e: React.FormEvent) => {
@@ -106,6 +107,43 @@ export default function CreateTenantPage() {
                                     />
                                     <p className="text-xs text-muted-foreground">Lowercase letters, numbers, and hyphens only</p>
                                 </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="tenant-period-start">{t('tenants.periodStart')}</Label>
+                                    <Input
+                                        id="tenant-period-start"
+                                        type="date"
+                                        value={form.periodStart}
+                                        onChange={(e) => setForm({ ...form, periodStart: e.target.value })}
+                                        className="glass border-0 h-11"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="tenant-period-end">{t('tenants.periodEnd')}</Label>
+                                    <Input
+                                        id="tenant-period-end"
+                                        type="date"
+                                        value={form.periodEnd}
+                                        onChange={(e) => setForm({ ...form, periodEnd: e.target.value })}
+                                        className="glass border-0 h-11"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-between rounded-xl bg-accent/20 p-4">
+                                    <div>
+                                        <Label className="text-sm font-medium">{t('tenants.foundation')}</Label>
+                                        <p className="text-xs text-muted-foreground mt-0.5">Toggle {t('tenants.foundation')} state</p>
+                                    </div>
+                                    <Switch
+                                        checked={form.isParent}
+                                        onCheckedChange={(checked) => setForm({ ...form, isParent: checked })}
+                                        id="tenant-parent-toggle"
+                                    />
+                                </div>
+
 
                                 <div className="flex gap-3 pt-4">
                                     <Button

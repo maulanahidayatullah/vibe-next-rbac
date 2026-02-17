@@ -55,7 +55,10 @@
         "deleteTenant": "Delete Tenant",
         "selectTenant": "Select Tenant",
         "confirmDelete": "Are you sure you want to delete this tenant?",
-        "details": "Tenant Details"
+        "details": "Tenant Details",
+        "periodStart": "Period Start",
+        "periodEnd": "Period End",
+        "foundation": "Foundation"
     },
     "users": {
         "title": "User Management",

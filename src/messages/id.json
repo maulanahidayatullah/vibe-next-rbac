@@ -55,7 +55,10 @@
         "deleteTenant": "Hapus Tenant",
         "selectTenant": "Pilih Tenant",
         "confirmDelete": "Apakah Anda yakin ingin menghapus tenant ini?",
-        "details": "Detail Tenant"
+        "details": "Detail Tenant",
+        "periodStart": "Periode Awal",
+        "periodEnd": "Periode Akhir",
+        "foundation": "Yayasan"
     },
     "users": {
         "title": "Manajemen Pengguna",
