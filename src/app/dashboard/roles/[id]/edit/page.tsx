@@ -15,6 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { PageTransition } from '@/components/layout/page-transition';
 import { FormSkeleton } from '@/components/layout/loading-skeletons';
 import { toast } from 'sonner';
+import { ChevronLeft } from 'lucide-react';
 
 interface Permission {
     id: string;
@@ -116,9 +117,7 @@ export default function EditRolePage() {
                         onClick={() => router.push('/dashboard/roles')}
                         className="hover:bg-accent"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="15 18 9 12 15 6" />
-                        </svg>
+                        <ChevronLeft size={20} />
                     </Button>
                     <div>
                         <h1 className="text-2xl font-bold">{t('roles.editRole')}</h1>

@@ -16,6 +16,7 @@ import { PageTransition } from '@/components/layout/page-transition';
 import { TableSkeleton } from '@/components/layout/loading-skeletons';
 import { TenantSelector } from '@/components/layout/tenant-selector';
 import { toast } from 'sonner';
+import { Plus } from 'lucide-react';
 
 interface UserData {
     id: string;
@@ -83,10 +84,7 @@ export default function UsersPage() {
                             className="theme-gradient text-white border-0"
                             id="create-user-btn"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-                                <line x1="12" y1="5" x2="12" y2="19" />
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                            </svg>
+                            <Plus size={16} className="mr-2" />
                             {t('users.createUser')}
                         </Button>
                     )}

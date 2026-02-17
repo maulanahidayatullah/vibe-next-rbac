@@ -13,6 +13,7 @@ import { PageTransition } from '@/components/layout/page-transition';
 import { TenantSelector } from '@/components/layout/tenant-selector';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { Target, Globe, Check, Save } from 'lucide-react';
 
 const themeColors: { value: ThemeColor; label: string; colorClass: string; preview: string }[] = [
     { value: 'blue', label: 'blue', colorClass: 'bg-blue-500', preview: 'from-blue-500 to-indigo-500' },
@@ -100,11 +101,7 @@ export default function SettingsPage() {
                         <Card className="glass border-0 h-full">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <circle cx="12" cy="12" r="6" />
-                                        <circle cx="12" cy="12" r="2" />
-                                    </svg>
+                                    <Target size={20} />
                                     {t('settings.theme')}
                                 </CardTitle>
                             </CardHeader>
@@ -136,9 +133,7 @@ export default function SettingsPage() {
                                                     animate={{ scale: 1 }}
                                                     className="absolute top-2 right-2 w-5 h-5 rounded-full theme-gradient flex items-center justify-center"
                                                 >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                        <polyline points="20 6 9 17 4 12" />
-                                                    </svg>
+                                                    <Check size={12} stroke="white" strokeWidth={3} />
                                                 </motion.div>
                                             )}
                                         </motion.button>
@@ -157,11 +152,7 @@ export default function SettingsPage() {
                         <Card className="glass border-0 h-full">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="2" y1="12" x2="22" y2="12" />
-                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                                    </svg>
+                                    <Globe size={20} />
                                     {t('settings.language')}
                                 </CardTitle>
                             </CardHeader>
@@ -194,9 +185,7 @@ export default function SettingsPage() {
                                                     animate={{ scale: 1 }}
                                                     className="ml-auto w-5 h-5 rounded-full theme-gradient flex items-center justify-center"
                                                 >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                        <polyline points="20 6 9 17 4 12" />
-                                                    </svg>
+                                                    <Check size={12} stroke="white" strokeWidth={3} />
                                                 </motion.div>
                                             )}
                                         </motion.button>
@@ -228,11 +217,7 @@ export default function SettingsPage() {
                                     className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full mr-2"
                                 />
                             ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                                    <polyline points="17 21 17 13 7 13 7 21" />
-                                    <polyline points="7 3 7 8 15 8" />
-                                </svg>
+                                <Save size={16} className="mr-2" />
                             )}
                             {t('common.save')}
                         </Button>

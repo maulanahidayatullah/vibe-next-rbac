@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { PageTransition } from '@/components/layout/page-transition';
 import { DashboardSkeleton } from '@/components/layout/loading-skeletons';
+import { Users, Shield, Activity } from 'lucide-react';
 
 export default function DashboardPage() {
     const t = useTranslations();
@@ -50,34 +51,19 @@ export default function DashboardPage() {
         {
             title: t('dashboard.totalUsers'),
             value: stats?.users || 0,
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-            ),
+            icon: <Users size={24} />,
             color: 'from-blue-500 to-cyan-500',
         },
         {
             title: t('dashboard.totalRoles'),
             value: stats?.roles || 0,
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-            ),
+            icon: <Shield size={24} />,
             color: 'from-purple-500 to-pink-500',
         },
         {
             title: t('dashboard.recentActivity'),
             value: logs.length,
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                </svg>
-            ),
+            icon: <Activity size={24} />,
             color: 'from-orange-500 to-amber-500',
         },
     ];
@@ -156,9 +142,7 @@ export default function DashboardPage() {
                     <Card className="glass border-0">
                         <CardContent className="p-6">
                             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                                </svg>
+                                <Activity size={20} />
                                 {t('dashboard.recentActivity')}
                             </h2>
                             {logs.length > 0 ? (

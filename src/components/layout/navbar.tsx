@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { api } from '@/lib/api-client';
 import { useRouter } from 'next/navigation';
+import { Menu, Hexagon, Sun, Moon, LogOut, LogIn } from 'lucide-react';
 
 export function Navbar() {
     const t = useTranslations();
@@ -57,11 +58,7 @@ export function Navbar() {
                             className="hover:bg-accent"
                             id="sidebar-toggle"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="3" y1="6" x2="21" y2="6" />
-                                <line x1="3" y1="12" x2="21" y2="12" />
-                                <line x1="3" y1="18" x2="21" y2="18" />
-                            </svg>
+                            <Menu size={20} />
                         </Button>
                     )}
                     <motion.div
@@ -71,11 +68,7 @@ export function Navbar() {
                         whileTap={{ scale: 0.98 }}
                     >
                         <div className="w-8 h-8 rounded-lg theme-gradient flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
-                                <line x1="12" y1="22" x2="12" y2="15.5" />
-                                <polyline points="22 8.5 12 15.5 2 8.5" />
-                            </svg>
+                            <Hexagon size={18} stroke="white" strokeWidth={2.5} />
                         </div>
                         <h1 className="text-lg font-bold theme-gradient-text hidden sm:block">
                             {t('common.appName')}
@@ -102,21 +95,9 @@ export function Navbar() {
                                 transition={{ duration: 0.3 }}
                             >
                                 {mode === 'dark' ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="12" cy="12" r="5" />
-                                        <line x1="12" y1="1" x2="12" y2="3" />
-                                        <line x1="12" y1="21" x2="12" y2="23" />
-                                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                                        <line x1="1" y1="12" x2="3" y2="12" />
-                                        <line x1="21" y1="12" x2="23" y2="12" />
-                                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                                    </svg>
+                                    <Sun size={18} />
                                 ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                                    </svg>
+                                    <Moon size={18} />
                                 )}
                             </motion.div>
                         </Button>
@@ -157,11 +138,7 @@ export function Navbar() {
                                     className="text-destructive cursor-pointer"
                                     id="logout-button"
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                        <polyline points="16 17 21 12 16 7" />
-                                        <line x1="21" y1="12" x2="9" y2="12" />
-                                    </svg>
+                                    <LogOut size={16} className="mr-2" />
                                     {t('auth.logout')}
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -173,11 +150,7 @@ export function Navbar() {
                                 className="theme-gradient text-white border-0 shadow-lg"
                                 id="login-button"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                                    <polyline points="10 17 15 12 10 7" />
-                                    <line x1="15" y1="12" x2="3" y2="12" />
-                                </svg>
+                                <LogIn size={16} className="mr-2" />
                                 {t('auth.login')}
                             </Button>
                         </motion.div>

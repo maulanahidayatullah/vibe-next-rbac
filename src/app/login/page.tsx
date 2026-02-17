@@ -13,6 +13,7 @@ import { useSettingsStore } from '@/stores/settings-store';
 import { api } from '@/lib/api-client';
 import { toast } from 'sonner';
 import { Navbar } from '@/components/layout/navbar';
+import { Hexagon, LogIn } from 'lucide-react';
 
 export default function LoginPage() {
     const t = useTranslations();
@@ -77,11 +78,7 @@ export default function LoginPage() {
                                 transition={{ type: 'spring', stiffness: 300, delay: 0.2 }}
                                 className="w-16 h-16 rounded-2xl theme-gradient flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary/25"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                    <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
-                                    <line x1="12" y1="22" x2="12" y2="15.5" />
-                                    <polyline points="22 8.5 12 15.5 2 8.5" />
-                                </svg>
+                                <Hexagon size={28} stroke="white" strokeWidth={2.5} />
                             </motion.div>
                             <h2 className="text-2xl font-bold">{t('auth.loginTitle')}</h2>
                             <p className="text-sm text-muted-foreground mt-1">{t('auth.loginSubtitle')}</p>
@@ -129,11 +126,7 @@ export default function LoginPage() {
                                         />
                                     ) : (
                                         <>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-                                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                                                <polyline points="10 17 15 12 10 7" />
-                                                <line x1="15" y1="12" x2="3" y2="12" />
-                                            </svg>
+                                            <LogIn size={18} className="mr-2" />
                                             {t('auth.login')}
                                         </>
                                     )}
