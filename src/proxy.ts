@@ -6,6 +6,8 @@ const publicPaths = ['/login', '/api/auth/login', '/api/auth/refresh', '/api/set
 export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
+    console.log(pathname, 'pathname API');
+
     // Allow public paths
     if (publicPaths.some((path) => pathname.startsWith(path))) {
         return NextResponse.next();

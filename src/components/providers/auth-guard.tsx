@@ -9,11 +9,13 @@ import { api } from '@/lib/api-client';
 export function AuthGuard({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
-    const { isAuthenticated, accessToken, setAuth, logout, setLoading } = useAuthStore();
+    const { isAuthenticated, accessToken, setAuth, logout, setLoading, _hasHydrated } = useAuthStore();
     const { applySettings } = useSettingsStore();
     const [checked, setChecked] = useState(false);
 
     useEffect(() => {
+        if (!_hasHydrated) return;
+
         const checkAuth = async () => {
             if (pathname === '/login') {
                 setLoading(false);
