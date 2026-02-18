@@ -13,11 +13,12 @@ import { PageTransition } from '@/components/layout/page-transition';
 import { toast } from 'sonner';
 import { ChevronLeft } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
+import { DateField } from '@/components/ui/day-picker';
 
 export default function CreateTenantPage() {
     const t = useTranslations();
     const router = useRouter();
-    const [form, setForm] = useState({ name: '', slug: '', periodStart: '', periodEnd: '', isParent: false });
+    const [form, setForm] = useState({ name: '', slug: '', periodStart: '', periodEnd: '', isParent: true });
     const [saving, setSaving] = useState(false);
 
     const handleSave = async (e: React.FormEvent) => {
@@ -103,6 +104,8 @@ export default function CreateTenantPage() {
                                         onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') })}
                                         placeholder="e.g. acme-corp"
                                         className="glass border-0 h-11"
+                                        disabled
+                                        readOnly
                                         required
                                     />
                                     <p className="text-xs text-muted-foreground">Lowercase letters, numbers, and hyphens only</p>
@@ -110,25 +113,21 @@ export default function CreateTenantPage() {
 
                                 <div className="space-y-2">
                                     <Label htmlFor="tenant-period-start">{t('tenants.periodStart')}</Label>
-                                    <Input
-                                        id="tenant-period-start"
-                                        type="date"
+                                    <DateField
                                         value={form.periodStart}
-                                        onChange={(e) => setForm({ ...form, periodStart: e.target.value })}
-                                        className="glass border-0 h-11"
-                                        required
+                                        onChange={(value) =>
+                                            setForm({ ...form, periodStart: value })
+                                        }
                                     />
                                 </div>
 
                                 <div className="space-y-2">
                                     <Label htmlFor="tenant-period-end">{t('tenants.periodEnd')}</Label>
-                                    <Input
-                                        id="tenant-period-end"
-                                        type="date"
+                                    <DateField
                                         value={form.periodEnd}
-                                        onChange={(e) => setForm({ ...form, periodEnd: e.target.value })}
-                                        className="glass border-0 h-11"
-                                        required
+                                        onChange={(value) =>
+                                            setForm({ ...form, periodEnd: value })
+                                        }
                                     />
                                 </div>
 

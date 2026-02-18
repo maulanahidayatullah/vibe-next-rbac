@@ -9,6 +9,9 @@ export class Tenant extends Model {
     declare deletedAt: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
+    declare periodStart: Date | null;
+    declare periodEnd: Date | null;
+    declare isParent: boolean;
 }
 
 export function initTenant(sequelize: Sequelize) {

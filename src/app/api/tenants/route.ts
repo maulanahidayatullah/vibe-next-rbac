@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
             return forbiddenResponse();
         }
 
-        const { name, slug } = await req.json();
+        const { name, slug, periodStart, periodEnd, isParent } = await req.json();
         if (!name || !slug) {
             return NextResponse.json({ error: 'Name and slug are required' }, { status: 400 });
         }
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Tenant with this slug already exists' }, { status: 409 });
         }
 
-        const tenant = await Tenant.create({ name, slug });
+        const tenant = await Tenant.create({ name, slug, periodStart, periodEnd, isParent });
 
         // Create default settings for new tenant
         await Setting.bulkCreate([
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
             action: 'CREATE',
             entity: 'tenant',
             entityId: tenant.id,
-            details: { name, slug },
+            details: { name, slug, periodStart, periodEnd, isParent },
             ipAddress: req.headers.get('x-forwarded-for') || 'unknown',
         });
 

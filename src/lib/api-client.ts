@@ -7,7 +7,7 @@ class ApiClient {
         try {
             const stored = localStorage.getItem('auth-storage');
             if (stored) {
-                console.log(stored);
+                // console.log(stored);
 
                 const parsed = JSON.parse(stored);
                 return parsed?.state?.accessToken || null;
@@ -38,7 +38,6 @@ class ApiClient {
         });
 
         if (response.status === 401) {
-            console.log(response);
 
             // Try refresh
             const refreshed = await this.tryRefresh();

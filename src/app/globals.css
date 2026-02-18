@@ -474,3 +474,93 @@
   );
   background-size: 1000px 100%;
 }
+
+
+.rdp-root {
+  --rdp-accent-color: var(--primary) !important;
+  --rdp-accent-background-color: var(--accent); 
+  --rdp-day-height: 40px;
+  --rdp-day-width: 40px;
+  --rdp-day_button-border-radius: var(--radius-sm);
+  --rdp-day_button-border: 2px solid transparent;
+  --rdp-day_button-height: 38px;
+  --rdp-day_button-width: 38px;
+  --rdp-selected-border: 2px solid var(--primary); 
+  --rdp-today-color: var(--primary); 
+  --rdp-nav_button-disabled-opacity: 0.4;
+  --rdp-nav_button-width: 2rem;
+  --rdp-nav_button-height: 2rem;
+  --rdp-nav-height: 2.75rem; 
+  --rdp-outside-opacity: 0.4;
+  --rdp-disabled-opacity: 0.35; 
+  --rdp-dropdown-gap: 0.5rem;
+  --rdp-months-gap: 1.5rem;
+  color: var(--foreground);
+}
+
+.rdp-dropdown:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+.rdp-dropdown:hover {
+  border-color: var(--primary);
+} 
+.rdp-dropdown option {
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+} 
+
+.rdp-dropdown_root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.rdp-button_next,
+.rdp-button_previous {
+  color: var(--foreground);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.rdp-button_next:hover,
+.rdp-button_previous:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.rdp-button_next:hover .rdp-chevron,
+.rdp-button_previous:hover .rdp-chevron {
+  fill: var(--primary);
+} 
+.rdp-day_button {
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font-size: 0.85rem;
+}
+.rdp-day_button:hover {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+} 
+.rdp-today:not(.rdp-outside) .rdp-day_button {
+  color: var(--primary);
+  font-weight: 700;
+} 
+.rdp-selected .rdp-day_button {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+  border-color: var(--primary) !important;
+  font-weight: 600;
+} 
+.rdp-outside .rdp-day_button {
+  color: var(--muted-foreground);
+}
+.rdp-disabled .rdp-day_button {
+  color: var(--muted-foreground);
+  cursor: not-allowed;
+} 
+.rdp-week_number {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+

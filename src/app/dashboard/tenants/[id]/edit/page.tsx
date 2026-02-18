@@ -14,6 +14,7 @@ import { PageTransition } from '@/components/layout/page-transition';
 import { FormSkeleton } from '@/components/layout/loading-skeletons';
 import { toast } from 'sonner';
 import { ChevronLeft } from 'lucide-react';
+import { DateField } from '@/components/ui/day-picker';
 
 export default function EditTenantPage() {
     const t = useTranslations();
@@ -21,7 +22,7 @@ export default function EditTenantPage() {
     const params = useParams();
     const tenantId = params.id as string;
 
-    const [form, setForm] = useState({ name: '', slug: '', isActive: true });
+    const [form, setForm] = useState({ name: '', slug: '', isActive: true, periodStart: '', periodEnd: '', isParent: false });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
@@ -34,6 +35,9 @@ export default function EditTenantPage() {
                         name: data.tenant.name,
                         slug: data.tenant.slug,
                         isActive: data.tenant.isActive,
+                        periodStart: data.tenant.periodStart,
+                        periodEnd: data.tenant.periodEnd,
+                        isParent: data.tenant.isParent,
                     });
                 }
             } catch (error: any) {
@@ -48,8 +52,11 @@ export default function EditTenantPage() {
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!form.name || !form.slug) {
-            toast.error(t('common.error'), { description: 'Name and slug are required' });
+
+        console.log(form);
+
+        if (!form.name || !form.slug || !form.periodStart || !form.periodEnd) {
+            toast.error(t('common.error'), { description: 'Name, slug, period start, and period end are required' });
             return;
         }
         setSaving(true);
@@ -126,7 +133,7 @@ export default function EditTenantPage() {
                                             });
                                         }}
                                         className="glass border-0 h-11"
-                                        required
+                                        required={false}
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -140,6 +147,40 @@ export default function EditTenantPage() {
                                     />
                                     <p className="text-xs text-muted-foreground">Lowercase letters, numbers, and hyphens only</p>
                                 </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="tenant-period-start">{t('tenants.periodStart')}</Label>
+                                    <DateField
+                                        required={true}
+                                        value={form.periodStart}
+                                        onChange={(value) =>
+                                            setForm({ ...form, periodStart: value })
+                                        }
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label htmlFor="tenant-period-end">{t('tenants.periodEnd')}</Label>
+                                    <DateField
+                                        required={true}
+                                        value={form.periodEnd}
+                                        onChange={(value) =>
+                                            setForm({ ...form, periodEnd: value })
+                                        }
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-between rounded-xl bg-accent/20 p-4">
+                                    <div>
+                                        <Label className="text-sm font-medium">{t('tenants.foundation')}</Label>
+                                        <p className="text-xs text-muted-foreground mt-0.5">Toggle {t('tenants.foundation')} state</p>
+                                    </div>
+                                    <Switch
+                                        checked={form.isParent}
+                                        onCheckedChange={(checked) => setForm({ ...form, isParent: checked })}
+                                        id="tenant-parent-toggle"
+                                    />
+                                </div>
+
                                 <div className="flex items-center justify-between rounded-xl bg-accent/20 p-4">
                                     <div>
                                         <Label className="text-sm font-medium">{t('tenants.status')}</Label>
