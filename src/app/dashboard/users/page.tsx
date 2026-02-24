@@ -14,7 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PageTransition } from '@/components/layout/page-transition';
 import { TableSkeleton } from '@/components/layout/loading-skeletons';
-import { TenantSelector } from '@/components/layout/tenant-selector';
+import { TenantSelector } from '@/components/layout/selector/tenant/tenant';
 import { toast } from 'sonner';
 import { Plus } from 'lucide-react';
 

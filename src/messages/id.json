@@ -58,7 +58,11 @@
         "details": "Detail Tenant",
         "periodStart": "Periode Awal",
         "periodEnd": "Periode Akhir",
-        "foundation": "Yayasan"
+        "type": "Tipe",
+        "foundation": "Yayasan",
+        "school": "Sekolah",
+        "parentFoundation": "Yayasan Induk",
+        "warningSubs": "Jika dipilih, sekolah ini akan mengikuti subscription foundation"
     },
     "users": {
         "title": "Manajemen Pengguna",

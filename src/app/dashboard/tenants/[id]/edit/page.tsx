@@ -22,7 +22,7 @@ export default function EditTenantPage() {
     const params = useParams();
     const tenantId = params.id as string;
 
-    const [form, setForm] = useState({ name: '', slug: '', isActive: true, periodStart: '', periodEnd: '', isParent: false });
+    const [form, setForm] = useState({ name: '', slug: '', isActive: true, periodStart: '', periodEnd: '', type: false });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
@@ -37,7 +37,7 @@ export default function EditTenantPage() {
                         isActive: data.tenant.isActive,
                         periodStart: data.tenant.periodStart,
                         periodEnd: data.tenant.periodEnd,
-                        isParent: data.tenant.isParent,
+                        type: data.tenant.type,
                     });
                 }
             } catch (error: any) {
@@ -175,8 +175,8 @@ export default function EditTenantPage() {
                                         <p className="text-xs text-muted-foreground mt-0.5">Toggle {t('tenants.foundation')} state</p>
                                     </div>
                                     <Switch
-                                        checked={form.isParent}
-                                        onCheckedChange={(checked) => setForm({ ...form, isParent: checked })}
+                                        checked={form.type}
+                                        onCheckedChange={(checked) => setForm({ ...form, type: checked })}
                                         id="tenant-parent-toggle"
                                     />
                                 </div>

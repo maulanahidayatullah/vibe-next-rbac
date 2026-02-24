@@ -159,7 +159,7 @@ export default function TenantsPage() {
 
                 {/* Delete Confirmation — keep dialog for destructive action confirmation */}
                 <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-                    <DialogContent className="glass border-0">
+                    <DialogContent className="border-0">
                         <DialogHeader>
                             <DialogTitle>{t('tenants.deleteTenant')}</DialogTitle>
                         </DialogHeader>

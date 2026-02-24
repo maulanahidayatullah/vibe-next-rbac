@@ -20,7 +20,7 @@ interface Tenant {
 }
 
 export function TenantSelector() {
-    const t = useTranslations('tenants');
+    const t = useTranslations();
     const { user } = useAuthStore();
     const { selectedTenantId, setSelectedTenantId } = useSettingsStore();
     const [tenants, setTenants] = useState<Tenant[]>([]);
@@ -41,11 +41,12 @@ export function TenantSelector() {
     return (
         <div className="mb-4">
             <Select
+                disabled={!tenants || tenants.length === 0}
                 value={selectedTenantId || ''}
                 onValueChange={(val) => setSelectedTenantId(val)}
             >
                 <SelectTrigger className="glass w-full" id="tenant-selector">
-                    <SelectValue placeholder={t('selectTenant')} />
+                    <SelectValue placeholder={tenants.length ? t('tenants.selectTenant') : t('common.noData')} />
                 </SelectTrigger>
                 <SelectContent className="glass">
                     {tenants.map((tenant) => (

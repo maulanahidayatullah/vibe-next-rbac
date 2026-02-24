@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -12,21 +12,23 @@ import { Label } from '@/components/ui/label';
 import { PageTransition } from '@/components/layout/page-transition';
 import { toast } from 'sonner';
 import { ChevronLeft } from 'lucide-react';
-import { Switch } from '@/components/ui/switch';
 import { DateField } from '@/components/ui/day-picker';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { TenantParentSelector } from '@/components/layout/selector/tenant/tenant-parent';
 
 export default function CreateTenantPage() {
     const t = useTranslations();
     const router = useRouter();
-    const [form, setForm] = useState({ name: '', slug: '', periodStart: '', periodEnd: '', isParent: true });
+    const [form, setForm] = useState({ name: '', slug: '', periodStart: '', periodEnd: '', type: '', parentId: '' });
     const [saving, setSaving] = useState(false);
 
-    const handleSave = async (e: React.FormEvent) => {
+    const handleSave = async (e: React.SubmitEvent) => {
         e.preventDefault();
         if (!form.name || !form.slug) {
             toast.error(t('common.error'), { description: 'Name and slug are required' });
             return;
         }
+
         setSaving(true);
         try {
             await api.createTenant(form);
@@ -36,6 +38,53 @@ export default function CreateTenantPage() {
             toast.error(error.message);
         } finally {
             setSaving(false);
+        }
+    };
+
+    const handleParentSubsChange = async (value: string) => {
+        try {
+
+            if (value === "0") {
+                setForm((prev) => ({
+                    ...prev,
+                    parentId: "0",
+                    periodStart: "",
+                    periodEnd: "",
+                }));
+            } else {
+                const data = await api.getTenant(value);
+                if (data.tenant) {
+                    setForm((prev) => ({
+                        ...prev,
+                        parentId: value,
+                        periodStart: data.tenant.periodStart,
+                        periodEnd: data.tenant.periodEnd,
+                    }));
+                }
+            }
+        } catch (error: any) {
+            toast.error(error.message);
+            router.push('/dashboard/tenants');
+        }
+    };
+
+    const handleTypeChange = async (value: string) => {
+        if (value === "fdt") {
+            setForm({
+                ...form,
+                type: "fdt",
+                parentId: "0",
+                periodStart: "",
+                periodEnd: "",
+            })
+        } else {
+            setForm({
+                ...form,
+                type: "sch",
+                parentId: "0",
+                periodStart: "",
+                periodEnd: "",
+            })
         }
     };
 
@@ -49,7 +98,7 @@ export default function CreateTenantPage() {
     return (
         <PageTransition>
             <div className="max-w-2xl mx-auto space-y-6">
-                {/* Header */}
+
                 <div className="flex items-center gap-3">
                     <Button
                         variant="ghost"
@@ -65,7 +114,6 @@ export default function CreateTenantPage() {
                     </div>
                 </div>
 
-                {/* Form */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -77,6 +125,38 @@ export default function CreateTenantPage() {
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleSave} className="space-y-5">
+
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <Label>Type</Label>
+                                        <Select
+                                            value={form.type}
+                                            onValueChange={(value) => handleTypeChange(value)}
+                                        >
+                                            <SelectTrigger className="glass border-0 h-11 w-full">
+                                                <SelectValue placeholder={t('tenants.foundation') + "/" + t('tenants.school')} />
+                                            </SelectTrigger>
+
+                                            <SelectContent>
+                                                <SelectItem value="fdt">{t('tenants.foundation')}</SelectItem>
+                                                <SelectItem value="sch">{t('tenants.school')}</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    <div className={form.type !== "sch" ? "hidden" : ""}>
+                                        <div className="space-y-2">
+                                            <Label>{t('tenants.parentFoundation')}</Label>
+                                            <TenantParentSelector
+                                                value={form.parentId}
+                                                onChange={(value) => handleParentSubsChange(value)}
+                                            />
+                                        </div>
+                                        <p className="text-xs text-muted-foreground">{t('tenants.warningSubs')}</p>
+                                    </div>
+                                </div>
+
+
                                 <div className="space-y-2">
                                     <Label htmlFor="tenant-name">{t('tenants.name')}</Label>
                                     <Input
@@ -114,6 +194,7 @@ export default function CreateTenantPage() {
                                 <div className="space-y-2">
                                     <Label htmlFor="tenant-period-start">{t('tenants.periodStart')}</Label>
                                     <DateField
+                                        disabled={form.parentId !== "0"}
                                         value={form.periodStart}
                                         onChange={(value) =>
                                             setForm({ ...form, periodStart: value })
@@ -124,25 +205,13 @@ export default function CreateTenantPage() {
                                 <div className="space-y-2">
                                     <Label htmlFor="tenant-period-end">{t('tenants.periodEnd')}</Label>
                                     <DateField
+                                        disabled={form.parentId !== "0"}
                                         value={form.periodEnd}
                                         onChange={(value) =>
                                             setForm({ ...form, periodEnd: value })
                                         }
                                     />
                                 </div>
-
-                                <div className="flex items-center justify-between rounded-xl bg-accent/20 p-4">
-                                    <div>
-                                        <Label className="text-sm font-medium">{t('tenants.foundation')}</Label>
-                                        <p className="text-xs text-muted-foreground mt-0.5">Toggle {t('tenants.foundation')} state</p>
-                                    </div>
-                                    <Switch
-                                        checked={form.isParent}
-                                        onCheckedChange={(checked) => setForm({ ...form, isParent: checked })}
-                                        id="tenant-parent-toggle"
-                                    />
-                                </div>
-
 
                                 <div className="flex gap-3 pt-4">
                                     <Button

@@ -11,7 +11,7 @@ export class Tenant extends Model {
     declare updatedAt: Date;
     declare periodStart: Date | null;
     declare periodEnd: Date | null;
-    declare isParent: boolean;
+    declare type: boolean;
 }
 
 export function initTenant(sequelize: Sequelize) {
@@ -49,10 +49,13 @@ export function initTenant(sequelize: Sequelize) {
                 type: DataTypes.DATE,
                 field: 'period_end',
             },
-            isParent: {
-                type: DataTypes.BOOLEAN,
-                defaultValue: false,
-                field: 'is_parent',
+            type: {
+                type: DataTypes.STRING,
+                field: 'type',
+            },
+            parentId: {
+                type: DataTypes.STRING,
+                allowNull: true,
             },
         },
         {

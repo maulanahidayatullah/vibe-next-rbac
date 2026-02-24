@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PageTransition } from '@/components/layout/page-transition';
-import { TenantSelector } from '@/components/layout/tenant-selector';
+import { TenantSelector } from '@/components/layout/selector/tenant/tenant';
 import { toast } from 'sonner';
 import { ChevronLeft } from 'lucide-react';
 

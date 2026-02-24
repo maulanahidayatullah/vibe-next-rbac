@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { PageTransition } from '@/components/layout/page-transition';
-import { TenantSelector } from '@/components/layout/tenant-selector';
+import { TenantSelector } from '@/components/layout/selector/tenant/tenant';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Target, Globe, Check, Save } from 'lucide-react';

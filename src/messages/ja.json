@@ -58,7 +58,11 @@
         "details": "テナント詳細",
         "periodStart": "期間開始",
         "periodEnd": "期間終了",
-        "foundation": "財団"
+        "type": "タイプ",
+        "foundation": "財団",
+        "school": "学校",
+        "parentFoundation": "財団",
+        "warningSubs": "選択すると、この学校は財団のサブスクリプションをフォローします"
     },
     "users": {
         "title": "ユーザー管理",

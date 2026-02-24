@@ -116,6 +116,10 @@ class ApiClient {
         return this.request<any>('/tenants');
     }
 
+    getTenantsParents() {
+        return this.request<any>('/tenants/parents');
+    }
+
     getTenant(id: string) {
         return this.request<any>(`/tenants/${id}`);
     }

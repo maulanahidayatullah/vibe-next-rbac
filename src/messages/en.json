@@ -58,7 +58,11 @@
         "details": "Tenant Details",
         "periodStart": "Period Start",
         "periodEnd": "Period End",
-        "foundation": "Foundation"
+        "type": "Type",
+        "foundation": "Foundation",
+        "school": "School",
+        "parentFoundation": "Parent Foundation",
+        "warningSubs": "If selected, this school will follow the foundation subscription"
     },
     "users": {
         "title": "User Management",

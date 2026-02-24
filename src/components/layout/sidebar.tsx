@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useAuthStore } from '@/stores/auth-store';
 import { useSettingsStore } from '@/stores/settings-store';
 import { cn } from '@/lib/utils';
-import { LayoutGrid, Home, School, Users, Shield, Settings } from 'lucide-react';
+import { LayoutGrid, Home, Users, Shield, Settings } from 'lucide-react';
 
 interface MenuItem {
     label: string;
@@ -36,14 +36,6 @@ export function Sidebar() {
             permission: 'tenants.view',
             superAdminOnly: true,
             icon: <Home size={20} />,
-        },
-        {
-            label: t('schools'),
-            href: '/dashboard/schools',
-            permission: 'schools.view',
-            superAdminOnly: true,
-            icon: <School size={20} />,
-
         },
         {
             label: t('users'),
@@ -88,7 +80,7 @@ export function Sidebar() {
                             <div className="px-4 mb-4">
                                 <div className="px-3 py-2 rounded-lg bg-primary/10 border border-primary/20">
                                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                                        School
+                                        Tenant
                                     </p>
                                     <p className="text-sm font-semibold text-primary truncate">
                                         {user.tenantName}

@@ -5,16 +5,17 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DayPickerDropdown } from '@/components/layout/date-selector';
+import { DayPickerDropdown } from '@/components/layout/selector/date';
 import { Button } from "@/components/ui/button"
 
 interface DateFieldProps {
     value?: string;
     onChange: (value: string) => void;
     required?: boolean;
+    disabled?: boolean;
 }
 
-export function DateField({ value, onChange, required }: DateFieldProps) {
+export function DateField({ value, onChange, required, disabled }: DateFieldProps) {
     const [open, setOpen] = useState(false);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +33,6 @@ export function DateField({ value, onChange, required }: DateFieldProps) {
                 return;
             }
 
-            // ✅ Klik di luar -> tutup
             setOpen(false);
         }
 
@@ -44,23 +44,25 @@ export function DateField({ value, onChange, required }: DateFieldProps) {
 
     const currentYear = new Date().getFullYear();
 
-
     return (
         <div className="relative" ref={wrapperRef}>
             {/* Input Trigger */}
             <input
+                disabled={disabled}
                 type="text"
                 readOnly
                 value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
-                onClick={() => setOpen((prev) => !prev)}
+                onClick={() => !disabled && setOpen((prev) => !prev)}
                 placeholder="Select date"
-                className="glass border-0 h-11 w-full px-3 rounded-md cursor-pointer"
+                className={`glass border-0 h-11 w-full px-3 rounded-md 
+                    ${disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'cursor-pointer'}
+                `}
                 required={required}
             />
 
             {/* Calendar with animation */}
             <AnimatePresence>
-                {open && (
+                {open && !disabled && (
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}

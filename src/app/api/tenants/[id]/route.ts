@@ -37,8 +37,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
             return NextResponse.json({ error: 'Tenant not found' }, { status: 404 });
         }
 
-        const { name, slug, isActive, periodStart, periodEnd, isParent } = await req.json();
-        await tenant.update({ name: name || tenant.name, slug: slug || tenant.slug, isActive: isActive ?? tenant.isActive, periodStart: periodStart || tenant.periodStart, periodEnd: periodEnd || tenant.periodEnd, isParent: isParent ?? tenant.isParent });
+        const { name, slug, isActive, periodStart, periodEnd, type } = await req.json();
+        await tenant.update({ name: name || tenant.name, slug: slug || tenant.slug, isActive: isActive ?? tenant.isActive, periodStart: periodStart || tenant.periodStart, periodEnd: periodEnd || tenant.periodEnd, type: type ?? tenant.type });
 
         await logActivity({
             tenantId: auth.user.tenantId,
@@ -46,7 +46,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
             action: 'UPDATE',
             entity: 'tenant',
             entityId: id,
-            details: { name, slug, isActive, periodStart, periodEnd, isParent },
+            details: { name, slug, isActive, periodStart, periodEnd, type },
             ipAddress: req.headers.get('x-forwarded-for') || 'unknown',
         });
 
